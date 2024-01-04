@@ -1,5 +1,6 @@
 import { LogoutButton } from "./LogoutButton";
 import PropTypes from 'prop-types';
+import Chat from "./Chat";
 
 const Home = ({username}) => {
     username = localStorage.getItem('username');
@@ -10,6 +11,7 @@ const Home = ({username}) => {
                 <p>Hello, {username ? username.toUpperCase() : 'x'}</p>
             </div>
             <span>Chat App Details</span>
+            <Chat/>
             <br></br>
     <LogoutButton />
     </>

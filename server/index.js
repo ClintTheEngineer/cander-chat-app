@@ -1,10 +1,10 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-
+const cors = require('cors');
 const app = express();
 
-const cors = require('cors');
+
 const pool = require('./db');
 
 const bcrypt = require('bcrypt');
@@ -23,7 +23,33 @@ app.get('/test', (req, res) => {
 })
 
 const server = http.createServer(app);
-const io = new Server(server);
+//const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+
+//Socket
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  
+  // Handle chat messages
+  socket.on('chat message', (message) => {
+    // You can save the message to your PostgreSQL database here
+    // Emit the message to all connected clients
+    io.emit('chat message', message);
+  });
+
+  // Handle user disconnection
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
+//Socket
 
 // Set up routes, handle user authentication, and connect to the database.
 //Login

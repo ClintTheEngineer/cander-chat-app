@@ -37,7 +37,7 @@ const Login = ({ setToken }) => {
         setToken(token);
         localStorage.setItem('token', token);
         localStorage.setItem('username', username);
-        navigate('/');
+        navigate('/home');
       } else if(response.status === 400){
         setErrorMessage('Login failed')
         console.error('Login failed:', response.status)
